@@ -7,117 +7,148 @@ from visualizacao.Visualizador import Visualizador
 
 
 # ============================================================
-# 1. Corpo finito 
+# CONFIGURAÇÃO
 # ============================================================
 
-F2 = CorpoFinito(2)
+CORPO = 2
+DIMENSAO = 10
 
-print("Corpo finito:")
-print("GF(3)")
-print("Elementos:", F2.elementos)
+GERADORES = [
+    (1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+    (0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+]
 
 
 # ============================================================
-# 2. Espaço vetorial 
+# CORPO FINITO
 # ============================================================
 
-V = EspacoVetorial(F2, 8)
+F = CorpoFinito(CORPO)
 
-print("\nEspaço vetorial:")
-print("GF(2)^8")
+print("========================================")
+print("CORPO FINITO")
+print("========================================")
+
+print("Corpo:", F)
+print("Elementos:", F.elementos)
+
+
+# ============================================================
+# ESPAÇO VETORIAL
+# ============================================================
+
+V = EspacoVetorial(F, DIMENSAO)
+
+print("\n========================================")
+print("ESPAÇO VETORIAL")
+print("========================================")
+
+print("Espaço:", f"GF({CORPO})^{DIMENSAO}")
 print("Dimensão:", V.dimensao)
 print("Quantidade de vetores:", len(V.elementos()))
 
 
 # ============================================================
-# 3. Geradores do código linear
+# CONVERSÃO DOS GERADORES PARA Vetor
 # ============================================================
 
-g1 = Vetor((1, 0, 1, 0, 1, 0, 1, 0), F2)
-g2 = Vetor((0, 1, 0, 1, 0, 1, 0, 1), F2)
+geradores = []
+
+for componentes in GERADORES:
+
+    if len(componentes) != DIMENSAO:
+        raise ValueError(
+            f"O vetor {componentes} possui "
+            f"{len(componentes)} componentes, mas "
+            f"a dimensão é {DIMENSAO}."
+        )
+
+    geradores.append(
+        Vetor(componentes, F)
+    )
 
 
 # ============================================================
-# 4. Código linear
+# CÓDIGO LINEAR
 # ============================================================
 
-C = CodigoLinear(V, [g1, g2])
+C = CodigoLinear(V, geradores)
 
-print("\nCódigo linear:")
+print("\n========================================")
+print("CÓDIGO LINEAR")
+print("========================================")
+
+print("Geradores:")
+
+for gerador in geradores:
+    print(" ", gerador)
+
+print("\nPalavras do código:")
 
 for palavra in C.elementos():
-    print(palavra)
+    print(" ", palavra)
 
-print("\nDimensão:", C.dimensao())
+
+# ============================================================
+# PARÂMETROS DO CÓDIGO
+# ============================================================
+
+d = C.distancia_minima()
+k = C.capacidade_correcao()
+
+print("\n========================================")
+print("PARÂMETROS")
+print("========================================")
+
+print("Dimensão do código:", C.dimensao())
 print("Quantidade de palavras:", len(C.elementos()))
+print("Comprimento:", DIMENSAO)
+print("Distância mínima:", d)
+print("Capacidade de correção:", k)
 
 
 # ============================================================
-# 5. Teste da distância de um vetor ao código
+# NOME DO ARQUIVO HTML
 # ============================================================
 
-v = Vetor((1, 1, 1, 1, 1, 1, 1, 1), F2)
+geradores_nome = "__".join(
+    "".join(str(x) for x in gerador)
+    for gerador in GERADORES
+)
 
-print("\nVetor:", v)
-print("Distância ao código:", C.distancia_ao_codigo(v))
-print("Distância <= 1:", C.esta_a_distancia(v, 1))
+ARQUIVO = (
+    f"GF{CORPO}_n{DIMENSAO}_"
+    f"k{k}_"
+    f"G{geradores_nome}.html"
+)
 
 
 # ============================================================
-# 6. Construção do grafo
+# GRAFO DE HAMMING
 # ============================================================
 
 G = Grafo(V.elementos())
 
 G.construir_por_distancia_hamming(1)
 
-print("\nGrafo:")
+print("\n========================================")
+print("GRAFO")
+print("========================================")
+
 print("Quantidade de vértices:", G.quantidade_vertices())
 print("Quantidade de arestas:", G.quantidade_arestas())
 
 
 # ============================================================
-# 7. Classes de distância ao código
+# VISUALIZAÇÃO
 # ============================================================
-
-rotulos = G.rotular_por_distancia(C)
-
-classes = {}
-
-for vertice, distancia in rotulos.items():
-
-    if distancia not in classes:
-        classes[distancia] = 0
-
-    classes[distancia] += 1
-
-
-print("\nClasses de distância:")
-
-for distancia in sorted(classes):
-
-    print(
-        f"Distância {distancia}: "
-        f"{classes[distancia]} vértices"
-    )
-
-
-# ============================================================
-# 8. Visualização
-# ============================================================
-
-d = C.distancia_minima()
-k = C.capacidade_correcao()
-
-
-print("\nParâmetros do código:")
-print("Distância mínima:", d)
-print("Capacidade de correção:", k)
 
 visualizador = Visualizador(G)
 
 visualizador.visualizar_por_distancia(
     C,
     k=k,
-    arquivo="grafo.html"
+    arquivo=ARQUIVO
 )
+
+print("\nVisualização criada em:", ARQUIVO)
