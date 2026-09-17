@@ -101,3 +101,25 @@ class CodigoLinear:
             f"dimensao={self.dimensao()}, "
             f"comprimento={self.espaco.dimensao})"
         )
+
+    def distancia_minima(self):
+        zero = self.espaco.zero()
+
+        pesos = [
+            vetor.peso_hamming()
+            for vetor in self.elementos()
+            if vetor != zero
+        ]
+
+        if not pesos:
+            return 0
+
+        return min(pesos)
+
+    def capacidade_correcao(self):
+        d = self.distancia_minima()
+
+        if d == 0:
+            return 0
+
+        return (d - 1) // 2
