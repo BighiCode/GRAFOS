@@ -4,7 +4,7 @@ from algebra.Vetor import Vetor
 from codigo.CodigoLinear import CodigoLinear
 from grafo.Grafo import Grafo
 from visualizacao.Visualizador import Visualizador
-
+from visualizacao.VisualizadorVisPy import VisualizadorVisPy
 
 # ============================================================
 # CONFIGURAÇÃO
@@ -151,3 +151,12 @@ visualizador.visualizar_por_distancia(
 )
 
 print("\nVisualização criada em:", ARQUIVO)
+
+
+visualizadorVisPy = VisualizadorVisPy(G)
+
+visualizadorVisPy.visualizar_por_distancia(
+    C,
+    k=k,
+    titulo=f"GF({CORPO})^{DIMENSAO}"
+)
