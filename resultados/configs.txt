@@ -1,0 +1,6 @@
+"gravitationalConstant": -2050,
+                        "centralGravity": 0.0001,
+                        "springLength": 20,
+                        "springConstant": 0.8,
+                        "damping": 0.4,
+                        "avoidOverlap": 1

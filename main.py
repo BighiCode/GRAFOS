@@ -13,7 +13,7 @@ from visualizacao.Visualizador import Visualizador
 CORPO = 2
 DIMENSAO = 7
 GERADORES = [
-    ( 1, 1, 1, 1,1,1,1), 
+    ( 1, 1, 1, 1,1,1,1), (1, 0, 1, 0,1,0,1), (0, 1, 0, 1,0,1,0), (0,0,1,1,1,0,0)
 
 ]
 

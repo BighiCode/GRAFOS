@@ -37,6 +37,33 @@ class Visualizador:
 
         return posicoes
 
+    def _posicoes_codigo(self, palavras_codigo, raio):
+            """
+            Coloca as palavras do código em posições afastadas,
+            distribuídas em uma circunferência.
+            """
+    
+            posicoes = {}
+    
+            quantidade = len(palavras_codigo)
+    
+            if quantidade == 1:
+                posicoes[palavras_codigo[0]] = (0, 0)
+                return posicoes
+            
+            for i, palavra in enumerate(palavras_codigo):
+    
+                angulo = (
+                    2 * math.pi * i / quantidade
+                )
+    
+                x = raio * math.cos(angulo)
+                y = raio * math.sin(angulo)
+    
+                posicoes[palavra] = (x, y)
+    
+            return posicoes
+
     def visualizar_por_distancia(
         self,
         codigo,
@@ -75,7 +102,8 @@ class Visualizador:
         # ==================================================
 
         posicoes_codigo = self._posicoes_codigo(
-            palavras_codigo
+            palavras_codigo,
+            raio= pow( codigo.espaco.dimensao, 2) *  50
         )
 
         # ==================================================
