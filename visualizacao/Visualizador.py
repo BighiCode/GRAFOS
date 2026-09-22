@@ -355,9 +355,9 @@ class Visualizador:
 
             Corpo: {corpo}<br>
 
-            Dimensão: {dimensao}<br>
+            Espaço Ambiente: {dimensao}<br>
 
-            k: {k}<br>
+            kappa : {k}<br>
 
             <br>
 

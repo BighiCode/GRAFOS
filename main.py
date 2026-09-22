@@ -13,7 +13,7 @@ from visualizacao.VisualizadorVisPy import VisualizadorVisPy
 CORPO = 2
 DIMENSAO = 7
 GERADORES = [
-    ( 1, 1, 1, 1,1,1,1), (1, 0, 1, 0,1,0,1), (0, 1, 0, 1,0,1,0), (0,0,1,1,1,0,0)
+    (1, 0, 1, 0,1,0,1), (0, 1, 0, 1,0,1,0), (0,0,1,1,1,0,0),(1,1,0,0,0,1,1),(1,1,0,1,1,1,0)
 
 ]
 
@@ -152,7 +152,7 @@ visualizador.visualizar_por_distancia(
 
 print("\nVisualização criada em:", ARQUIVO)
 
-
+"""
 visualizadorVisPy = VisualizadorVisPy(G)
 
 visualizadorVisPy.visualizar_por_distancia(
@@ -160,3 +160,4 @@ visualizadorVisPy.visualizar_por_distancia(
     k=k,
     titulo=f"GF({CORPO})^{DIMENSAO}"
 )
+"""
